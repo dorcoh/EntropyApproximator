@@ -1,0 +1,146 @@
+  
+  WISH - Weighted-Integrals-And-Sums-By-Hashing
+  
+  Version 1.0 (March 2013)
+
+=====================================================================
+  Copyright, 2013:
+
+  Stefano Ermon     - Cornell University  , ermonste@cs.cornell.edu
+  Ashish Sabharwal  - IBM Watson          , ashish.sabharwal@us.ibm.com
+
+  The lastest version of this program is available at
+  http://www.cs.cornell.edu/~ermonste
+
+  Please send bug reports and suggestions/improvements to:
+  ermonste@cs.cornell.edu and ashish.sabharwal@us.ibm.com
+=====================================================================
+
+1. WISH
+2. System Requirements
+3. Usage Examples
+4. Running in Parallel
+
+---------------------------------------------------------------------
+
+1. WISH
+
+WISH is an algorithm to estimate discrete weighted sums defined over
+exponentially large set. This implementation is designed to
+approximate the partition function of discrete binary graphical models,
+specified in the UAI format. This is accomplished by (approximately)
+solving a small number of optimization instances (MAP queries) using a
+combinatorial optimization package.
+
+For more details on the algorithm see:
+
+  Taming the Curse of Dimensionality: Discrete Integration by Hashing and Optimization.
+  Stefano Ermon, Carla P. Gomes, Ashish Sabharwal, and Bart Selman
+  ICML-2013. 30th International Conference on Machine Learning, Atlanta, GA, Jun 2013
+
+  Stefano Ermon, Carla Gomes, Ashish Sabharwal, and Bart Selman.
+  Optimization With Parity Constraints: From Binary Codes to Discrete Integration.
+  UAI-13. In Proc. 29th Conference on Uncertainty in Artificial Intelligence, July 2013. 
+
+Please reference these papers if you use this code.
+
+---------------------------------------------------------------------
+
+2. System Requirements
+
+WISH uses a combinatorial optimization solver to solve a sequence of
+optimization instances. This implementation relies on IBM ILOG CPLEX
+Optimization Studio (specifically, the Integer Linear Programming solver). 
+ 
+
+2a. IBM ILOG CPLEX Optimization Studio must be installed on the system
+(the current version of WISH has been tested with Academic Research Edition version 12.3). 
+A free academic license of CPLEX may be obtained from:
+
+  http://www.ibm.com/ibm/university/academic/pub/page/academic_initiative
+
+Detailed installation instructions for CPLEX are provided on the
+website.
+If you experience difficulties running the code despite having the
+academic version installed (or with a different version of CPLEX), 
+please contact us.
+
+
+2b. We provide a sample Makefile.
+
+2c. The main script WISHCPLEX.py, which is written in Python, simply
+invokes the optimization package and processes the results. It can
+run on any platform on which base Python and some necessary Python
+packages are installed.
+
+WISH has been tested with Python 2.6 and 2.7. It relies on a few
+common Python packages.  The recommended and easiest way to install
+these Python pacakges is to use the "easy_install" or "pip-python"
+programs, which, if not already available on your system, can
+themselves be installed from RPMs or using 'yum install'. Assuming you
+have access to one of these, all you should need is:
+
+  easy_install argparse numpy scipy matplotlib
+
+  OR
+
+  python-pip install argparse numpy scipy matplotlib
+
+Alternatively, you can install these packages from the distributions
+available at the corresponding webpages, which are easily found with
+an internet search.
+
+---------------------------------------------------------------------
+
+3. Usage Examples
+
+Run "python WISHCPLEX.py -h" for usage information.
+
+To estimate the partition function of the graphical model specified by
+clique_attractive_n15_w0.1_fg.uai simply run:
+
+  python WISHCPLEX.py testInstances/clique_attractive_n15_w0.1_fg.uai LOG-test15 
+
+This will compute the partition function for the graphical model
+specified by clique_attractive_n15_w0.1_fg.uai and generate a log-file
+for each optimization instance solved in a folder called LOG-test15.
+It will also produce a PLOT of the estimated tail distribution in the
+log folder.
+
+UAI format is specified e.g. here
+http://www.cs.huji.ac.il/project/PASCAL/fileFormat.php
+Currently, only binary variables are supported.
+
+Smaller values for parameters alpha and delta lead to more accurate
+estimates. However, it also increases the number of optimization
+instances to be solved. See the ICML-13 paper for details.
+
+Timeout parameter sets a timeout (in seconds) for each optimization
+instance. Theoretical guararantees only hold if the optimization
+instances are solved to optimality. The default value of 10 seconds is
+used to provide fast sequential execution but will only work for small
+problems. Larger timeout values are recommanded but might require a
+parallel execution. See below.
+
+---------------------------------------------------------------------
+
+4.  Running in Parallel
+
+WISH is massively parallel and is meant to be run in parallel,
+assigning each optimization instance to a machine/core.  The main
+script WISH.py needs to be modified in a system dependent way to
+achieve this.
+
+We provide an example (LaunchIloglue.sh) of a system-dependent script
+based on Torque/PBS which can be invoked by WISH.py to run the
+optimization instances in parallel. See lines 77-82 in the WISHCPLEX.py
+source code.
+
+The parallel version will produce LOG files as the sequential version
+in an output folder. When all optimization instances are completed (or
+timeout), LOGs can then be processed using:
+
+  python WISHLogProcess.py LogFolder
+
+---------------------------------------------------------------------
+
