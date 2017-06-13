@@ -1,4 +1,4 @@
-A supplement for the book <a src="https://mitpress.mit.edu/books/perturbations-optimization-and-statistics">"Perturbations, Optimization, and Statistics"</a> Chapter 9: "Probabilistic Inference by Hashing and Optimization" by Stefano Ermon
+A supplement for the book <a href="https://mitpress.mit.edu/books/perturbations-optimization-and-statistics">"Perturbations, Optimization, and Statistics"</a> (edited by Tamir Hazan, George Papandreou and Daniel Tarlow) - Chapter 9: "Probabilistic Inference by Hashing and Optimization" by Stefano Ermon
 
 <b>Notice:</b> The tools described here are under copyright of Stefano Ermon , his README's are inside the directories
 
