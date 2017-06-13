@@ -10,14 +10,14 @@ Here we describe a comparison between <b>approximate</b> inference/counting tool
 ## (Approximate model counter) vs. (Precise model counter)
 
 Formula1 ( input size x )
+
 TimeApprox, TimePrecise, Difference
+
 OutputApprox, OutputPrecise, Difference, Perecentage
 
 Formula2 ( input size 5x )
 
 Formula3 ( input size 10x )
-
-Difference
 
 # WISH vs. ?
 ## (Approximate inference) vs (Precise inference)
@@ -27,8 +27,6 @@ Formula1 ( input size x )
 Formula2 ( input size 5x )
 
 Formula3 ( input size 10x )
-
-Difference
 
 # Conclusions
 
