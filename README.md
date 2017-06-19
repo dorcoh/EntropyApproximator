@@ -4,31 +4,8 @@ A supplement for the book <a href="https://mitpress.mit.edu/books/perturbations-
 
 For the latest versions you can check his page: http://www.cs.cornell.edu/~ermonste
 
-Here we describe a comparison between <b>approximate</b> inference/counting tools (using hashing and optimization oracle), and <b>precise</b> ones:
+Here I describe a patch to Ermon's SampleTreeSearch tool, to compute the approximated entropy (the average degree of freedom for it's variables) of a CNF formula.
 
-# STS - Search Tree Sampler vs. Cachet
-## (Approximate model counter) vs. (Precise model counter)
+# Preliminary
 
-Formula1 ( input size x )
-
-TimeApprox, TimePrecise, Difference
-
-OutputApprox, OutputPrecise, Difference, Perecentage
-
-Formula2 ( input size 5x )
-
-Formula3 ( input size 10x )
-
-# WISH vs. ?
-## (Approximate inference) vs (Precise inference)
-
-Formula1 ( input size x )
-
-Formula2 ( input size 5x )
-
-Formula3 ( input size 10x )
-
-# Conclusions
-
-We worked hard, and achieved very little.
-
+wee $ \varphi $
