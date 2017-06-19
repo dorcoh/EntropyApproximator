@@ -4,8 +4,4 @@
 
 <p>For the latest versions you can check his page: http://www.cs.cornell.edu/~ermonste</p>
 
-<p>Here I describe a patch to Ermon's SampleTreeSearch tool, to compute the approximated entropy (the average degree of freedom for it's variables) of a CNF formula.</p>
-
-<h1>Preliminary</h1>
-
-<p>$$ \varphi $$</p>
+<p>In my <a href="https://dorcoh.github.io/entropy-patch/">blog post</a> I describe a patch to Ermon's SampleTreeSearch tool, to compute the approximated entropy (the average degree of freedom for it's variables) of a CNF formula.</p>
