@@ -1,13 +1,3 @@
-<html>
-<head>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-</head>
-
-<body>
 <p>A supplement for the book <a href="https://mitpress.mit.edu/books/perturbations-optimization-and-statistics">“Perturbations, Optimization, and Statistics”</a> (edited by Tamir Hazan, George Papandreou and Daniel Tarlow) - Chapter 9: “Probabilistic Inference by Hashing and Optimization” by Stefano Ermon</p>
 
 <p><b>Notice:</b> The tools described here are under copyright of Stefano Ermon , his README’s are inside the directories</p>
@@ -19,6 +9,3 @@
 <h1 id="preliminary">Preliminary</h1>
 
 $$ \varphi $$
-</body>
-
-</html>
