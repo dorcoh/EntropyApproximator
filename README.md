@@ -11,3 +11,5 @@
 ```
 [user@localhost ~]$ patch originalfile -i patchfile.patch -o updatedfile
 ```
+
+A presentation of mine is also available `Seminar.pdf`
