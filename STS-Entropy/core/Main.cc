@@ -35,6 +35,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include <sstream>
 #include "mtl/Sort.h"
 #include <algorithm>
+#include <math.h>
 
 //#include <boost/random/linear_congruential.hpp>
 //#include <boost/random/uniform_int.hpp>
@@ -277,6 +278,33 @@ int main(int argc, char** argv)
 		std::vector <double > sampled_log_z;
 		
 		std::vector <unsigned > var_ordering;		// variable ordering
+		
+		// a vector for counting #(x) and #(!x)
+		std::vector<int> varSolCountPos; // counter for pos
+		std::vector<int> varSolCountNeg; // counter for neg
+		std::vector<double> rvPos;		 // vector for r(v)
+		std::vector<double> rvNeg;
+		std::vector<double> ev;			 // vector for e(v)
+		std::vector<double> entropy;	 // vector for formula entropy for each sample
+
+
+		// init
+		varSolCountNeg.resize(var_num);
+		varSolCountPos.resize(var_num);
+		rvPos.resize(var_num);
+		rvNeg.resize(var_num);
+		ev.resize(var_num);
+		for (int iter=0; iter<var_num; iter++)
+		{
+			varSolCountPos[iter] = 0;
+			varSolCountNeg[iter] = 0;
+			rvPos[iter] = 0;
+			rvNeg[iter] = 0;
+			ev[iter] = 0;
+		}
+
+		entropy.resize(nsamples);
+
 		// generate a random variable ordering
 		var_ordering.resize(var_num);
 		for (int hh =0;hh<var_num;hh++)
@@ -449,10 +477,84 @@ int main(int argc, char** argv)
 							if (verb>0)						
 							printf("%d\n",toInt(OutputSamples[l][i]));							
 							}
+						// compute #(x) and #(!x)
+						if (OutputSamples[l][i] == 1)
+						{
+							varSolCountPos[i] += 1;
+						} else {
+							varSolCountNeg[i] += 1;
+						}
 					}						
 				counts[bit_representation] = counts[bit_representation]+1;
 				}
-			}	
+			}
+			// print literals solution counters
+			if (verb>1)
+			{
+				// print pos - #(!x)
+				for (int iter=0; iter < var_num; iter++)
+				{
+					if (iter!=var_num-1)
+					{
+						if (verb>0)						
+							printf("%d,",varSolCountPos[iter]);							
+					}
+					else
+					{
+						if (verb>0)						
+							printf("%d\n",varSolCountPos[iter]);							
+					}
+
+				}
+				// print neg - #(x)
+				for (int iter=0; iter < var_num; iter++)
+				{
+					if (iter!=var_num-1)
+					{
+						if (verb>0)						
+							printf("%d,",varSolCountNeg[iter]);							
+					}
+					else
+					{
+						if (verb>0)						
+							printf("%d\n",varSolCountNeg[iter]);							
+					}
+				}
+			}
+			// compute r(v) and e(v)
+			for (int iter=0; iter < var_num; iter++)
+			{
+				int total = varSolCountPos[iter] + varSolCountNeg[iter];
+				double logrv = 0;
+				double logrvBar = 0;
+				rvPos[iter] = (double)varSolCountPos[iter] / total;
+				rvNeg[iter] = 1-rvPos[iter];
+				if (rvPos[iter] != 0 && rvNeg[iter] !=0)
+				{
+					logrv = log2(rvPos[iter]);
+					logrvBar = log2(rvNeg[iter]);
+				} 
+				else 
+				{
+					if (rvPos[iter] == 0)
+						logrv = 0;
+					if (rvNeg[iter] == 0)
+						logrvBar = 0;
+				} 
+				ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
+			}
+
+			// compute entropy
+			
+			double sumEntropy = 0;
+			for (int iter=0; iter < var_num; iter++)
+			{
+				sumEntropy += ev[iter];
+			}
+
+			entropy[ss] = sumEntropy / var_num;
+			printf("entropy=%lf", entropy[ss]);
+			
 			// output the estimated multipliers
 			if (verb>=2)
 				{
@@ -513,7 +615,13 @@ int main(int argc, char** argv)
 		double log_z_hat = logsumexp(sampled_log_z)-log(nsamples);
 		printf("Estimated log-z: %f\n",log_z_hat);
 		printf("Estimated Z: %e\n",exp(log_z_hat));
-		
+		double avgEntropy = 0;
+		for (int iter=0; iter<nsamples; iter++)
+		{
+			avgEntropy += entropy[iter];
+		}
+		avgEntropy = (double)avgEntropy / nsamples;
+		printf("Average Entropy: %f\n", avgEntropy);
 		
 		
 #ifdef NDEBUG
