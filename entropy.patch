@@ -1,0 +1,119 @@
+37a38
+> #include <math.h>
+279a281,307
+> 		
+> 		// a vector for counting #(x) and #(!x)
+> 		std::vector<int> varSolCountPos; // counter for pos
+> 		std::vector<int> varSolCountNeg; // counter for neg
+> 		std::vector<double> rvPos;		 // vector for r(v)
+> 		std::vector<double> rvNeg;
+> 		std::vector<double> ev;			 // vector for e(v)
+> 		std::vector<double> entropy;	 // vector for formula entropy for each sample
+> 
+> 
+> 		// init
+> 		varSolCountNeg.resize(var_num);
+> 		varSolCountPos.resize(var_num);
+> 		rvPos.resize(var_num);
+> 		rvNeg.resize(var_num);
+> 		ev.resize(var_num);
+> 		for (int iter=0; iter<var_num; iter++)
+> 		{
+> 			varSolCountPos[iter] = 0;
+> 			varSolCountNeg[iter] = 0;
+> 			rvPos[iter] = 0;
+> 			rvNeg[iter] = 0;
+> 			ev[iter] = 0;
+> 		}
+> 
+> 		entropy.resize(nsamples);
+> 
+451a480,486
+> 						// compute #(x) and #(!x)
+> 						if (OutputSamples[l][i] == 1)
+> 						{
+> 							varSolCountPos[i] += 1;
+> 						} else {
+> 							varSolCountNeg[i] += 1;
+> 						}
+455c490,557
+< 			}	
+---
+> 			}
+> 			// print literals solution counters
+> 			if (verb>1)
+> 			{
+> 				// print pos - #(!x)
+> 				for (int iter=0; iter < var_num; iter++)
+> 				{
+> 					if (iter!=var_num-1)
+> 					{
+> 						if (verb>0)						
+> 							printf("%d,",varSolCountPos[iter]);							
+> 					}
+> 					else
+> 					{
+> 						if (verb>0)						
+> 							printf("%d\n",varSolCountPos[iter]);							
+> 					}
+> 
+> 				}
+> 				// print neg - #(x)
+> 				for (int iter=0; iter < var_num; iter++)
+> 				{
+> 					if (iter!=var_num-1)
+> 					{
+> 						if (verb>0)						
+> 							printf("%d,",varSolCountNeg[iter]);							
+> 					}
+> 					else
+> 					{
+> 						if (verb>0)						
+> 							printf("%d\n",varSolCountNeg[iter]);							
+> 					}
+> 				}
+> 			}
+> 			// compute r(v) and e(v)
+> 			for (int iter=0; iter < var_num; iter++)
+> 			{
+> 				int total = varSolCountPos[iter] + varSolCountNeg[iter];
+> 				double logrv = 0;
+> 				double logrvBar = 0;
+> 				rvPos[iter] = (double)varSolCountPos[iter] / total;
+> 				rvNeg[iter] = 1-rvPos[iter];
+> 				if (rvPos[iter] != 0 && rvNeg[iter] !=0)
+> 				{
+> 					logrv = log2(rvPos[iter]);
+> 					logrvBar = log2(rvNeg[iter]);
+> 				} 
+> 				else 
+> 				{
+> 					if (rvPos[iter] == 0)
+> 						logrv = 0;
+> 					if (rvNeg[iter] == 0)
+> 						logrvBar = 0;
+> 				} 
+> 				ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
+> 			}
+> 
+> 			// compute entropy
+> 			
+> 			double sumEntropy = 0;
+> 			for (int iter=0; iter < var_num; iter++)
+> 			{
+> 				sumEntropy += ev[iter];
+> 			}
+> 
+> 			entropy[ss] = sumEntropy / var_num;
+> 			printf("entropy=%lf", entropy[ss]);
+> 			
+516c618,624
+< 		
+---
+> 		double avgEntropy = 0;
+> 		for (int iter=0; iter<nsamples; iter++)
+> 		{
+> 			avgEntropy += entropy[iter];
+> 		}
+> 		avgEntropy = (double)avgEntropy / nsamples;
+> 		printf("Average Entropy: %f\n", avgEntropy);
