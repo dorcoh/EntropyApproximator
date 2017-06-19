@@ -9,7 +9,7 @@
 <p>Applying the patch could be done in the following way (under Linux):</p>
 
 ```
-[user@localhost ~]$ patch originalfile -i patchfile.patch -o updatedfile
+[user@localhost ~]$ patch Main.cc -i entropy.patch -o newMain.cc
 ```
 
 A presentation of mine is also available `Seminar.pdf`
