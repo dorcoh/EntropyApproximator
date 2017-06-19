@@ -8,4 +8,4 @@
 
 <h1 id="preliminary">Preliminary</h1>
 
-<p>wee <script type="math/tex">\varphi</script></p>
+<p>wee $ \varphi $</p>
