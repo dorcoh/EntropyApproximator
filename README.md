@@ -47,7 +47,9 @@ Average Entropy: 0.415007
 
 ### STS
 Stefano Ermon, Carla Gomes, and Bart Selman.
+
 Uniform Solution Sampling Using a Constraint Solver As an Oracle.
+
 UAI-12. In Proc. 28th Conference on Uncertainty in Artificial Intelligence, August 2012.
 
 ### 
