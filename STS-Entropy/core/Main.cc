@@ -552,8 +552,8 @@ int main(int argc, char** argv)
 				sumEntropy += ev[iter];
 			}
 
-			entropy[ss] = sumEntropy / var_num;
-			printf("entropy=%lf", entropy[ss]);
+			entropy[ss-1] = sumEntropy / var_num;
+			printf("entropy=%lf", entropy[ss-1]);
 			
 			// output the estimated multipliers
 			if (verb>=2)
@@ -616,9 +616,9 @@ int main(int argc, char** argv)
 		printf("Estimated log-z: %f\n",log_z_hat);
 		printf("Estimated Z: %e\n",exp(log_z_hat));
 		double avgEntropy = 0;
-		for (int iter=0; iter<nsamples; iter++)
+		for (int iter=1; iter<=nsamples; iter++)
 		{
-			avgEntropy += entropy[iter];
+			avgEntropy += entropy[iter-1];
 		}
 		avgEntropy = (double)avgEntropy / nsamples;
 		printf("Average Entropy: %f\n", avgEntropy);
