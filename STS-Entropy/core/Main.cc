@@ -162,7 +162,6 @@ int main(int argc, char** argv)
 		BoolOption   random_variable_ordering    ("SAMPLING", "rvar",    "Random variable ordering or lex", false);
 		IntOption    nsamples ("SAMPLING", "nsamples","Number of sampling iterations.\n", 10, IntRange(0, 300000000));
 		IntOption    ks ("SAMPLING", "k","Number of samples per level.\n", 50, IntRange(0, 100000000));
-		
         parseOptions(argc, argv, true);
 
         Solver S;
@@ -285,8 +284,6 @@ int main(int argc, char** argv)
 		std::vector<double> rvPos;		 // vector for r(v)
 		std::vector<double> rvNeg;
 		std::vector<double> ev;			 // vector for e(v)
-		std::vector<double> entropy;	 // vector for formula entropy for each sample
-
 
 		// init
 		varSolCountNeg.resize(var_num);
@@ -302,8 +299,6 @@ int main(int argc, char** argv)
 			rvNeg[iter] = 0;
 			ev[iter] = 0;
 		}
-
-		entropy.resize(nsamples);
 
 		// generate a random variable ordering
 		var_ordering.resize(var_num);
@@ -336,6 +331,7 @@ int main(int argc, char** argv)
 		
 		for (int ss =1;ss<=nsamples;ss++)
 		{
+
 		multipliers.clear();
 		//AllSamples.clear();
 		
@@ -458,6 +454,7 @@ int main(int argc, char** argv)
 			if (verb>0)
 			{
 			printf("Outputting samples:\n");
+			printf("OutputSamples size: %d\n",(int) OutputSamples.size());
 			for (int l = 0; l < (int) OutputSamples.size(); l++)
 				{
 				//int z = 0;
@@ -521,39 +518,7 @@ int main(int argc, char** argv)
 					}
 				}
 			}
-			// compute r(v) and e(v)
-			for (int iter=0; iter < var_num; iter++)
-			{
-				int total = varSolCountPos[iter] + varSolCountNeg[iter];
-				double logrv = 0;
-				double logrvBar = 0;
-				rvPos[iter] = (double)varSolCountPos[iter] / total;
-				rvNeg[iter] = 1-rvPos[iter];
-				if (rvPos[iter] != 0 && rvNeg[iter] !=0)
-				{
-					logrv = log2(rvPos[iter]);
-					logrvBar = log2(rvNeg[iter]);
-				} 
-				else 
-				{
-					if (rvPos[iter] == 0)
-						logrv = 0;
-					if (rvNeg[iter] == 0)
-						logrvBar = 0;
-				} 
-				ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
-			}
 
-			// compute entropy
-			
-			double sumEntropy = 0;
-			for (int iter=0; iter < var_num; iter++)
-			{
-				sumEntropy += ev[iter];
-			}
-
-			entropy[ss-1] = sumEntropy / var_num;
-			printf("entropy=%lf", entropy[ss-1]);
 			
 			// output the estimated multipliers
 			if (verb>=2)
@@ -615,6 +580,7 @@ int main(int argc, char** argv)
 		double log_z_hat = logsumexp(sampled_log_z)-log(nsamples);
 		printf("Estimated log-z: %f\n",log_z_hat);
 		printf("Estimated Z: %e\n",exp(log_z_hat));
+		/*
 		double avgEntropy = 0;
 		for (int iter=1; iter<=nsamples; iter++)
 		{
@@ -622,6 +588,40 @@ int main(int argc, char** argv)
 		}
 		avgEntropy = (double)avgEntropy / nsamples;
 		printf("Average Entropy: %f\n", avgEntropy);
+		*/
+		// compute r(v) and e(v)
+		for (int iter=0; iter < var_num; iter++)
+		{
+			int total = varSolCountPos[iter] + varSolCountNeg[iter];
+			double logrv = 0;
+			double logrvBar = 0;
+			rvPos[iter] = (double)varSolCountPos[iter] / total;
+			rvNeg[iter] = 1-rvPos[iter];
+			if (rvPos[iter] != 0 && rvNeg[iter] !=0)
+			{
+				logrv = log2(rvPos[iter]);
+				logrvBar = log2(rvNeg[iter]);
+			} 
+			else 
+			{
+				if (rvPos[iter] == 0)
+					logrv = 0;
+				if (rvNeg[iter] == 0)
+					logrvBar = 0;
+			} 
+			ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
+		}
+
+		// compute entropy
+		
+		double sumEntropy = 0;
+		for (int iter=0; iter < var_num; iter++)
+		{
+			sumEntropy += ev[iter];
+		}
+
+		double lastEntropy = sumEntropy / var_num;
+		printf("Estimated entropy: %lf\n", lastEntropy);
 		
 		
 #ifdef NDEBUG
