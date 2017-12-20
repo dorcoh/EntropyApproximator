@@ -54,7 +54,7 @@ Uniform Solution Sampling Using a Constraint Solver As an Oracle.
 
 UAI-12. In Proc. 28th Conference on Uncertainty in Artificial Intelligence, August 2012.
 
-### Entropy propery for CNF formulas
+### About entropy property of CNF formulas
 Dor Cohen, Ofer Strichman
 
 The impact of Entropy and Solution Density on selected SAT heuristics
