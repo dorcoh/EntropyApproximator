@@ -14,10 +14,12 @@ A talk about Chapter 9 is also available at `Seminar.pdf`
 
 <p>Applying the patch could be done in the following way (tested under Linux Ubuntu):</p> 
 
-### Patch main (can skip this and instead download and compile STS-Entropy):
+### Patch main
+
+(can skip this and instead download and compile STS-Entropy)
 
 ```
-[user@localhost ~]$ patch Main.cc -i entropy.patch -o newMain.cc
+[user@localhost ~]$ patch Main.cc -i entropy.patch -o Main.cc
 ```
 
 ### Compile:
@@ -40,7 +42,7 @@ Different : 457
 Chi-square : 39.260000
 Estimated log-z: 7.666618
 Estimated Z: 2.135845e+03
-Average Entropy: 0.415007
+Estimated entropy: 0.472847
 ```
 
 # References
@@ -52,4 +54,9 @@ Uniform Solution Sampling Using a Constraint Solver As an Oracle.
 
 UAI-12. In Proc. 28th Conference on Uncertainty in Artificial Intelligence, August 2012.
 
-### 
+### Entropy propery for CNF formulas
+Dor Cohen, Ofer Strichman
+
+The impact of Entropy and Solution Density on selected SAT heuristics
+
+abs/1706.05637, arXiv pre-print, June 2017

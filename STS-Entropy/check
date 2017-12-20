@@ -1,0 +1,82 @@
+vars-200-clauses-800-Q-0.69-id-50
+(second line is after bug fix)
+
+n=2
+Average Entropy: 0.167117
+Average Entropy: 0.328808
+
+n=6
+Average Entropy: 0.280587
+Average Entropy: 0.343964
+
+n=10
+Average Entropy: 0.318902
+Average Entropy: 0.358711
+
+n=12
+Average Entropy: 0.331636
+Average Entropy: 0.363974
+
+n=14
+Average Entropy: 0.339508
+Average Entropy: 0.367683
+
+n=16
+Average Entropy: 0.347358
+Average Entropy: 0.373222
+
+n=18
+Average Entropy: 0.354989
+Average Entropy: 0.378539
+
+n=20
+Average Entropy: 0.362301
+Average Entropy: 0.384273
+
+n=28
+Average Entropy: 0.382952
+Average Entropy: 0.398135
+
+n=50
+Average Entropy: 0.409522
+Average Entropy: 0.418659
+
+n=100
+Average Entropy: 0.439960
+Average Entropy: 0.444723
+
+n=200
+Average Entropy: 0.459347
+Average Entropy: 0.461743
+
+n=500
+Average Entropy: 0.469659
+Average Entropy: 0.470605
+
+n=1000
+Average Entropy: 0.471670
+
+vars-400-clauses-1600-Q-0.7-id-0
+
+n=2
+Average Entropy: 0.253473
+
+n=10
+Average Entropy: 0.441350
+(12 seconds)
+
+n=20
+Average Entropy: 0.492920
+real	0m32.397s
+
+n=50
+Average Entropy: 0.542935
+real	1m47.377s
+
+n=100
+Average Entropy: 0.572037
+real	5m18.982s
+
+n=500
+Average Entropy: 0.599617
+real	23m4.706s
