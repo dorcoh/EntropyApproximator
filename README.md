@@ -47,8 +47,16 @@ Estimated Z: 2.135845e+03
 Estimated entropy: 0.472847
 Output file: t2307.cnf.entropy.out
 ```
+Output file: <a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
 
-<a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
+### Args:
+As described in `STS --help`:
+```
+  -nsamples     = <int32>  [   0 .. 300000000] (default: 10)
+  -k            = <int32>  [   0 .. 100000000] (default: 50)
+```
+nsamples - Number of sampling iterations
+k - Number of samples per level (the higher the value, the more uniform the solutions are)
 
 # Sanity check
 
