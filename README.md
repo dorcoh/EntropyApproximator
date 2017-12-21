@@ -62,7 +62,7 @@ p cnf 3 3
 ```
 
 We can write it down and see that there are total 5 solutions:
-` { (1,0,0), (1,0,1), (1,1,0), (1,1,1), (0,0,1) } `
+` { (1,0,0), (1,0,1), (1,1,0), (1,1,1), (0,1,1) } `
 
 Ratios of each literal (number of times it appears in solutions):
 ` r(1) = 4/5, r(-1) = 1/5, r(2) = 3/5, r(-2) = 2/5, r(3) = 3/5, r(-3) = 2/5 `
