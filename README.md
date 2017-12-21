@@ -86,7 +86,7 @@ Var,TotalSols,PosLitSols,NegLitSols,EntropyShan
 #Estimated entropy: 0.887943
 ```
 
-The ratios (PosLitSols/NegLitSols) converged <b>exactly</b> to the right values.
+The ratios (PosLitSols/NegLitSols) converged <b>exactly</b> to the correct values.
 
 # References
 
