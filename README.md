@@ -45,12 +45,16 @@ Chi-square : 39.260000
 Estimated log-z: 7.666618
 Estimated Z: 2.135845e+03
 Estimated entropy: 0.472847
-Output file: <a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
+Output file: t2307.cnf.entropy.out
 ```
+
+<a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
 
 ## Sanity check
 
 Let's examine a simple formula with 3 variables:
+
+This math is inline $`a^2+b^2=c^2`$.
 
 $` x_{1} , x_{2}, x_{3} `$
 
