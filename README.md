@@ -54,13 +54,30 @@ Output file: t2307.cnf.entropy.out
 
 Let's examine a simple formula with 3 variables:
 
-This math is inline $`a^2+b^2=c^2`$.
+```
+p cnf 3 3
+1  2  3  0
+1  -2  3  0
+1  2  -3  0
+```
 
-$` x_{1} , x_{2}, x_{3} `$
+We can write it down and see that there are total 5 solutions:
+` { (1,0,0), (1,0,1), (1,1,0), (1,1,1), (0,0,1) } `
 
-Constraints (CNF formula):
+Ratios of each literal (number of times it appears in solutions):
+` r(1) = 4/5, r(-1) = 1/5, r(2) = 3/5, r(-2) = 2/5, r(3) = 3/5, r(-3) = 2/5 `
 
-$ \varphi = (x_{1} \lor x_{2} \lor x_{3} ) $
+In this scenario of tiny formula the approximator sampled 50 solutions. Some of the solutions are identical of course, but usually it isn't the case where we handle larger formulas. In particular the samples should be sampled uniformly (randomly). Let's take a look of it's output:
+
+```
+Var,TotalSols,PosLitSols,NegLitSols,EntropyShan
+1,50,0.800000,0.200000,0.721928
+2,50,0.600000,0.400000,0.970951
+3,50,0.600000,0.400000,0.970951
+#Estimated entropy: 0.887943
+```
+
+The ratios (PosLitSols/NegLitSols) converged <b>exactly</b> to the right values.
 
 # References
 
