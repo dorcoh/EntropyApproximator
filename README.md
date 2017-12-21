@@ -1,3 +1,5 @@
+Approximate a CNF formula solutions entropy (defined in paper referenced below), by using hashing & optimization technique as implemented in STS SAT model counter (reference below).
+
 # Info
 
 <p>A supplement for the book <a href="https://mitpress.mit.edu/books/perturbations-optimization-and-statistics">&quot;Perturbations, Optimization, and Statistics&quot;</a> (edited by Tamir Hazan, George Papandreou and Daniel Tarlow) - Chapter 9: &quot;Probabilistic Inference by Hashing and Optimization&quot; by Stefano Ermon</p>
@@ -43,7 +45,18 @@ Chi-square : 39.260000
 Estimated log-z: 7.666618
 Estimated Z: 2.135845e+03
 Estimated entropy: 0.472847
+Output file: <a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
 ```
+
+## Sanity check
+
+Let's examine a simple formula with 3 variables:
+
+$ x_{1} , x_{2}, x_{3} $
+
+Constraints (CNF formula):
+
+$ \varphi = (x_{1} \lor x_{2} \lor x_{3} ) $
 
 # References
 
