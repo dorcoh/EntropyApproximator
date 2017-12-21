@@ -1,6 +1,18 @@
 --- STS/core/Main.cc	2012-03-22 17:43:28.000000000 +0200
-+++ STS-Entropy/core/Main.cc	2017-08-10 15:43:52.433660686 +0300
-@@ -35,6 +35,7 @@
++++ STS-Entropy/core/Main.cc	2017-12-21 11:48:45.904554902 +0200
+@@ -23,6 +23,11 @@
+ #include <signal.h>
+ #include <zlib.h>
+ 
++// added to output file
++#include <stdio.h>
++#include <libgen.h> // UNIX ONLY
++#include <string.h>
++
+ #include "utils/System.h"
+ #include "utils/ParseUtils.h"
+ #include "utils/Options.h"
+@@ -35,6 +40,7 @@
  #include <sstream>
  #include "mtl/Sort.h"
  #include <algorithm>
@@ -8,7 +20,7 @@
  
  //#include <boost/random/linear_congruential.hpp>
  //#include <boost/random/uniform_int.hpp>
-@@ -161,7 +162,6 @@
+@@ -161,7 +167,6 @@
  		BoolOption   random_variable_ordering    ("SAMPLING", "rvar",    "Random variable ordering or lex", false);
  		IntOption    nsamples ("SAMPLING", "nsamples","Number of sampling iterations.\n", 10, IntRange(0, 300000000));
  		IntOption    ks ("SAMPLING", "k","Number of samples per level.\n", 50, IntRange(0, 100000000));
@@ -16,7 +28,7 @@
          parseOptions(argc, argv, true);
  
          Solver S;
-@@ -277,6 +277,29 @@
+@@ -277,6 +282,29 @@
  		std::vector <double > sampled_log_z;
  		
  		std::vector <unsigned > var_ordering;		// variable ordering
@@ -46,7 +58,7 @@
  		// generate a random variable ordering
  		var_ordering.resize(var_num);
  		for (int hh =0;hh<var_num;hh++)
-@@ -308,6 +331,7 @@
+@@ -308,6 +336,7 @@
  		
  		for (int ss =1;ss<=nsamples;ss++)
  		{
@@ -54,7 +66,7 @@
  		multipliers.clear();
  		//AllSamples.clear();
  		
-@@ -430,6 +454,7 @@
+@@ -430,6 +459,7 @@
  			if (verb>0)
  			{
  			printf("Outputting samples:\n");
@@ -62,7 +74,7 @@
  			for (int l = 0; l < (int) OutputSamples.size(); l++)
  				{
  				//int z = 0;
-@@ -449,10 +474,52 @@
+@@ -449,10 +479,52 @@
  							if (verb>0)						
  							printf("%d\n",toInt(OutputSamples[l][i]));							
  							}
@@ -116,7 +128,7 @@
  			// output the estimated multipliers
  			if (verb>=2)
  				{
-@@ -513,7 +580,48 @@
+@@ -513,7 +585,65 @@
  		double log_z_hat = logsumexp(sampled_log_z)-log(nsamples);
  		printf("Estimated log-z: %f\n",log_z_hat);
  		printf("Estimated Z: %e\n",exp(log_z_hat));
@@ -129,6 +141,17 @@
 +		avgEntropy = (double)avgEntropy / nsamples;
 +		printf("Average Entropy: %f\n", avgEntropy);
 +		*/
++
++		// file for outputting entropies
++		FILE * pFile;
++		// produce filename
++		char* filename;
++		char* buff;
++		buff = basename(argv[1]);
++		filename = strcat(buff, ".entropy.out");
++		pFile = fopen(filename, "w");
++		// header
++		fprintf(pFile, "Var,TotalSols,PosLitSols,NegLitSols,EntropyShan\n");
 +		// compute r(v) and e(v)
 +		for (int iter=0; iter < var_num; iter++)
 +		{
@@ -150,10 +173,13 @@
 +					logrvBar = 0;
 +			} 
 +			ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
++			int varnum = iter+1;
++			fprintf(pFile, "%d,%d,%lf,%lf,%lf\n", varnum, total, rvPos[iter], rvNeg[iter], ev[iter]);
 +		}
+ 		
 +
 +		// compute entropy
- 		
++		
 +		double sumEntropy = 0;
 +		for (int iter=0; iter < var_num; iter++)
 +		{
@@ -162,6 +188,9 @@
 +
 +		double lastEntropy = sumEntropy / var_num;
 +		printf("Estimated entropy: %lf\n", lastEntropy);
++		fprintf(pFile, "#Estimated entropy: %lf\n", lastEntropy);
++		fclose(pFile);
++		printf("Output file: %s\n", filename);
  		
  		
  #ifdef NDEBUG
