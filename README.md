@@ -50,7 +50,7 @@ Output file: t2307.cnf.entropy.out
 
 <a href="https://github.com/dorcoh/entropyApproximator/blob/master/STS-Entropy/core/t2307.cnf.entropy.out">t2307.cnf.entropy.out</a>
 
-## Sanity check
+# Sanity check
 
 Let's examine a simple formula with 3 variables:
 
