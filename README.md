@@ -52,7 +52,7 @@ Output file: <a href="https://github.com/dorcoh/entropyApproximator/blob/master/
 
 Let's examine a simple formula with 3 variables:
 
-```math x_{1} , x_{2}, x_{3} ```
+$` x_{1} , x_{2}, x_{3} `$
 
 Constraints (CNF formula):
 
