@@ -56,6 +56,7 @@ As described in `STS --help`:
   -k            = <int32>  [   0 .. 100000000] (default: 50)
 ```
 nsamples - Number of sampling iterations
+
 k - Number of samples per level (the higher the value, the more uniform the solutions are)
 
 # Sanity check
