@@ -1,0 +1,5 @@
+Var,TotalSols,PosLitSols,NegLitSols,EntropyShan
+1,50,0.800000,0.200000,0.721928
+2,50,0.600000,0.400000,0.970951
+3,50,0.600000,0.400000,0.970951
+#Estimated entropy: 0.887943

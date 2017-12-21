@@ -23,6 +23,11 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include <signal.h>
 #include <zlib.h>
 
+// added to output file
+#include <stdio.h>
+#include <libgen.h> // UNIX ONLY
+#include <string.h>
+
 #include "utils/System.h"
 #include "utils/ParseUtils.h"
 #include "utils/Options.h"
@@ -589,6 +594,17 @@ int main(int argc, char** argv)
 		avgEntropy = (double)avgEntropy / nsamples;
 		printf("Average Entropy: %f\n", avgEntropy);
 		*/
+
+		// file for outputting entropies
+		FILE * pFile;
+		// produce filename
+		char* filename;
+		char* buff;
+		buff = basename(argv[1]);
+		filename = strcat(buff, ".entropy.out");
+		pFile = fopen(filename, "w");
+		// header
+		fprintf(pFile, "Var,TotalSols,PosLitSols,NegLitSols,EntropyShan\n");
 		// compute r(v) and e(v)
 		for (int iter=0; iter < var_num; iter++)
 		{
@@ -610,7 +626,10 @@ int main(int argc, char** argv)
 					logrvBar = 0;
 			} 
 			ev[iter] = -( (rvPos[iter]) * (logrv) ) - ( (rvNeg[iter])*(logrvBar) );
+			int varnum = iter+1;
+			fprintf(pFile, "%d,%d,%lf,%lf,%lf\n", varnum, total, rvPos[iter], rvNeg[iter], ev[iter]);
 		}
+		
 
 		// compute entropy
 		
@@ -622,6 +641,9 @@ int main(int argc, char** argv)
 
 		double lastEntropy = sumEntropy / var_num;
 		printf("Estimated entropy: %lf\n", lastEntropy);
+		fprintf(pFile, "#Estimated entropy: %lf\n", lastEntropy);
+		fclose(pFile);
+		printf("Output file: %s\n", filename);
 		
 		
 #ifdef NDEBUG
