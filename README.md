@@ -12,7 +12,7 @@ A talk about Chapter 9 is also available at `Seminar.pdf`
 
 # Patch
 
-<p>In my <a href="https://dorcoh.github.io/entropy-patch/">blog post</a> I describe a patch to Ermon's SampleTreeSearch tool, to compute the approximated entropy (the average degree of freedom for it's variables) of a CNF formula.</p>
+<p>In my <a href="http://intractable.netlify.com/sat/c++/2017/06/18/entropy-patch.html">blog post</a> I describe a patch to Ermon's SampleTreeSearch tool, to compute the approximated entropy (the average degree of freedom for it's variables) of a CNF formula.</p>
 
 <p>Applying the patch could be done in the following way (tested under Linux Ubuntu):</p> 
 
